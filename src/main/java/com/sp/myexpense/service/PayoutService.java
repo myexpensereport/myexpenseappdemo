@@ -25,6 +25,8 @@ public interface PayoutService {
     void deletePayout(Long payoutId);
     
     public int  getPayoutByMonth(String month);
+    
+   // public List<PayoutEntity>  getSchemeDetails(long schemeId);
 
 
 }

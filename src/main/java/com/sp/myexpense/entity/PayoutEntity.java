@@ -27,6 +27,14 @@ public class PayoutEntity {
 	private LocalDate startDate;
 	private LocalDate endDate;
 	private String tenure;
+	private LocalDate returnEarnedDate;
+	private int interstAmount;
+	private int redeem;
+	private int bonus;
+	private int balanceFund;
+	private int totalEarned;
+	private String status;
+	
 	/**
 	 * @return the tenure
 	 */
@@ -39,14 +47,6 @@ public class PayoutEntity {
 	public void setTenure(String tenure) {
 		this.tenure = tenure;
 	}
-	private LocalDate returnEarnedDate;
-	private int interstAmount;
-	private int redeem;
-	private int bonus;
-	private int balanceFund;
-	private int totalEarned;
-	private String status;
-	
 	
 	/**
 	 * @return the status

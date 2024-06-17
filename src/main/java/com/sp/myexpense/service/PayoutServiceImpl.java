@@ -72,7 +72,7 @@ public class PayoutServiceImpl implements PayoutService {
 				payoutEntity.get().setInvestAmount(payoutDto.getInvestAmount());
 			}
 			if(payoutDto.getInterstAmount() !=0 && payoutEntity.get().getInterstAmount() != payoutDto.getInterstAmount()) {
-				payoutEntity.get().setExpectedAmount(payoutDto.getExpectedAmount());
+				payoutEntity.get().setExpectedAmount(payoutDto.getInterstAmount());
 			}
 			if(payoutDto.getTenure() != null && !(payoutEntity.get().getTenure().equals(payoutDto.getTenure()))) {
 				payoutEntity.get().setTenure(payoutDto.getTenure());
@@ -92,13 +92,16 @@ public class PayoutServiceImpl implements PayoutService {
 				System.out.println("Earned Date validation "+payoutDto.getReturnEarnedDate());
 				payoutEntity.get().setReturnEarnedDate(payoutDto.getReturnEarnedDate());
 			}
-			
-			if(payoutDto.getBalanceFund() !=0 && payoutEntity.get().getBalanceFund() != payoutDto.getBalanceFund()) {
-				payoutEntity.get().setRedeem(payoutDto.getRedeem());
-			}
 			if(payoutDto.getRedeem() != 0 && payoutEntity.get().getRedeem() != payoutDto.getRedeem()) {
-				payoutEntity.get().setBalanceFund(payoutDto.getBalanceFund());
+				System.out.println("reedem ::"+payoutDto.getRedeem());
+				payoutEntity.get().setRedeem(payoutDto.getRedeem());
+				
 			}
+			if(payoutDto.getBalanceFund() !=0 && payoutEntity.get().getBalanceFund() != payoutDto.getBalanceFund()) {
+				System.out.println("balanceFund ::"+(payoutDto.getInvestAmount()- payoutDto.getRedeem()));
+				payoutEntity.get().setBalanceFund(payoutDto.getInvestAmount()- payoutDto.getRedeem());
+			}
+			
 			if(payoutDto.getStatus() != null && payoutEntity.get().getStatus().equalsIgnoreCase(payoutDto.getStatus())) {
 				payoutEntity.get().setStatus(payoutDto.getStatus());
 			}
@@ -201,5 +204,11 @@ public class PayoutServiceImpl implements PayoutService {
 		System.out.println("payoutRes:::"+payoutRes);
 		return payoutRes;
 	}
+
+	/*
+	 * @Override public PayoutDto getSchemeDetails(long schemeId) {
+	 * Optional<PayoutEntity> payoutEntity = payoutRepo.findById(schemeId); return
+	 * mapper.map(payoutEntity.get(), PayoutDto.class); }
+	 */
 	
 }

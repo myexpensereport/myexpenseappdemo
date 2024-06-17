@@ -76,5 +76,12 @@ public class PayoutController {
 		return payoutService.getPayoutByMonth(month);
 	}
 	
+	/*
+	 * @GetMapping("/getSchemeDetails/{schemeId}") public
+	 * ResponseEntity<List<PayoutEntity>> getPayoutByMonth(@PathVariable("id") long
+	 * schemeId) { System.out.println("Get SchemeDetails :::"); return
+	 * ResponseEntity.ok(payoutService.getSchemeDetails(schemeId)); }
+	 */
+	
 
 }
