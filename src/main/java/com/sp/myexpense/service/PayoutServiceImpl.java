@@ -45,8 +45,10 @@ public class PayoutServiceImpl implements PayoutService {
 		for(PayoutEntity payout : payoutEntity){
 			String noOfDays = getNumberOfDays(payout.getStartDate(),payout.getEndDate());
 			int balanceFund = getBalanceFund(payout.getInvestAmount(),payout.getRedeem());
+			int totalEarned = getTotalEarnedFromPayout(payout.getInterstAmount(),payout.getBonus());
 			payout.setTenure(noOfDays);
 			payout.setBalanceFund(balanceFund);
+			payout.setTotalEarned(totalEarned);
 		}
 		
 		System.out.println(payoutEntity);
@@ -72,13 +74,13 @@ public class PayoutServiceImpl implements PayoutService {
 				payoutEntity.get().setInvestAmount(payoutDto.getInvestAmount());
 			}
 			if(payoutDto.getInterstAmount() !=0 && payoutEntity.get().getInterstAmount() != payoutDto.getInterstAmount()) {
-				payoutEntity.get().setExpectedAmount(payoutDto.getInterstAmount());
+				payoutEntity.get().setInterstAmount(payoutDto.getInterstAmount());
 			}
 			if(payoutDto.getTenure() != null && !(payoutEntity.get().getTenure().equals(payoutDto.getTenure()))) {
 				payoutEntity.get().setTenure(payoutDto.getTenure());
 			}
 			if(payoutDto.getExpectedAmount() != 0 && payoutEntity.get().getExpectedAmount() != payoutDto.getExpectedAmount ()) {
-				payoutEntity.get().setInterstAmount(payoutDto.getExpectedAmount());
+				payoutEntity.get().setExpectedAmount(payoutDto.getExpectedAmount());
 			}
 			if(payoutDto.getStartDate() != null && payoutEntity.get().getStartDate() != payoutDto.getStartDate()) {
 				System.out.println("StartDate validation "+payoutDto.getStartDate());
@@ -127,6 +129,11 @@ public class PayoutServiceImpl implements PayoutService {
 	private int getBalanceFund(int inverstAmount , int  reedem) {
 		
 		return inverstAmount-reedem;
+	}
+	
+	private int getTotalEarnedFromPayout(int intrestAmount , int  bonus) {
+		
+		return intrestAmount+bonus;
 	}
 
 	@Override
