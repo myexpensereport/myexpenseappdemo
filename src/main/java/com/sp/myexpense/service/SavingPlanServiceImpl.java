@@ -23,6 +23,7 @@ public class SavingPlanServiceImpl implements SavingPlanService{
 	
 	@Override
 	public SavingPlan addSavingPlan(SavingPlan savingplan) {
+		savingplan.setStatus("Active");
 		return planRepo.save(savingplan);
 	}
 

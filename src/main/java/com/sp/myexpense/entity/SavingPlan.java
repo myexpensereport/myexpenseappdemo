@@ -23,9 +23,24 @@ public class SavingPlan {
 	private long id;
 	private String schemeName;
     private int investAmount;
-    private int intrestAmount;
+    private int interestAmount;
     private LocalDate startDate;
     private LocalDate endDate;
+    private String status;
+    
+    
+	public int getInterestAmount() {
+		return interestAmount;
+	}
+	public void setInterestAmount(int interestAmount) {
+		this.interestAmount = interestAmount;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	/**
 	 * @return the id
 	 */
@@ -63,18 +78,6 @@ public class SavingPlan {
 	 */
 	public void setInvestAmount(int investAmount) {
 		this.investAmount = investAmount;
-	}
-	/**
-	 * @return the intrestAmount
-	 */
-	public int getIntrestAmount() {
-		return intrestAmount;
-	}
-	/**
-	 * @param intrestAmount the intrestAmount to set
-	 */
-	public void setIntrestAmount(int intrestAmount) {
-		this.intrestAmount = intrestAmount;
 	}
 	/**
 	 * @return the startDate

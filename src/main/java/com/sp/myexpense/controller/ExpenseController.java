@@ -159,9 +159,6 @@ public class ExpenseController {
 	
 	@PostMapping("/addSavingPlan")
 	public ResponseEntity<?> addSavingPlan(@RequestBody SavingPlan savingPlan ) {
-		System.out.println("SavingPlan:::"+savingPlan.getSchemeName()+"::::Invest Amount :::"+savingPlan.getInvestAmount()+" Amount is :::"+savingPlan.getIntrestAmount());
-		System.out.println("StartDate:::"+savingPlan.getStartDate()+"::::End Date :::"+savingPlan.getEndDate());
-		
 		savingPlanService.addSavingPlan(savingPlan);
 		return new ResponseEntity<>("SavingPlan Add Successfully", HttpStatus.OK);
 	}
