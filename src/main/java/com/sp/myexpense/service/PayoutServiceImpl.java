@@ -12,16 +12,13 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import com.sp.myexpense.dao.PayoutDto;
 import com.sp.myexpense.entity.PayoutEntity;
-import com.sp.myexpense.entity.PayoutHistoryTest;
-import com.sp.myexpense.entity.TransactionHistoryTest;
-import com.sp.myexpense.repository.PayoutHistoyRepo;
+import com.sp.myexpense.entity.PayoutSchemeHistory;
 import com.sp.myexpense.repository.PayoutRepo;
-import com.sp.myexpense.repository.TrasanctionHistoryRepo;
+import com.sp.myexpense.repository.PayoutSchemeHistoryRepo;
 
 /**
  * 
@@ -35,11 +32,9 @@ public class PayoutServiceImpl implements PayoutService {
 	@Autowired
 	ModelMapper mapper;
 	
-	@Autowired
-	PayoutHistoyRepo payoutHistoyRepo;
 
 	@Autowired
-	TrasanctionHistoryRepo trasanctionHistoryRepo;
+	PayoutSchemeHistoryRepo payoutSchemeHistoryRepo;
 	
 	@Override
 	public PayoutEntity addPayout(PayoutDto payoutDto) {
@@ -223,87 +218,11 @@ public class PayoutServiceImpl implements PayoutService {
 		return payoutRes;
 	}
 
-	/*
-	 * @Override public PayoutDto getSchemeDetails(long schemeId) {
-	 * Optional<PayoutEntity> payoutEntity = payoutRepo.findById(schemeId); return
-	 * mapper.map(payoutEntity.get(), PayoutDto.class); }
-	 */
-	
-	public PayoutHistoryTest addPayoutTest(PayoutDto payoutDto) {
-		PayoutHistoryTest payoutEntity = new PayoutHistoryTest();
-		payoutEntity = mapper.map(payoutDto, PayoutHistoryTest.class);
-	    payoutEntity = payoutHistoyRepo.save(payoutEntity);
-		
-		return payoutEntity;
-	}
-	
-	@Override
-	public PayoutHistoryTest updatePayoutTest(Long payoutId, PayoutDto payoutDto) {
-		Optional<PayoutHistoryTest> payoutEntity = payoutHistoyRepo.findById(payoutId);
-		if(payoutEntity.isPresent()) {
-			if(payoutDto.getSchemeName() != null && !(payoutEntity.get().getSchemeName().equals(payoutDto.getSchemeName()))) {
-				payoutEntity.get().setSchemeName(payoutDto.getSchemeName());
-			}
-			if(payoutDto.getInvestAmount() != 0 && payoutEntity.get().getInvestAmount() != payoutDto.getInvestAmount()) {
-				payoutEntity.get().setInvestAmount(payoutDto.getInvestAmount());
-			}
-			if(payoutDto.getInterstAmount() !=0 && payoutEntity.get().getInterstAmount() != payoutDto.getInterstAmount()) {
-				payoutEntity.get().setInterstAmount(payoutDto.getInterstAmount());
-			}
-			if(payoutDto.getTenure() != null && !(payoutEntity.get().getTenure().equals(payoutDto.getTenure()))) {
-				payoutEntity.get().setTenure(payoutDto.getTenure());
-			}
-			if(payoutDto.getExpectedAmount() != 0 && payoutEntity.get().getExpectedAmount() != payoutDto.getExpectedAmount ()) {
-				payoutEntity.get().setExpectedAmount(payoutDto.getExpectedAmount());
-			}
-			if(payoutDto.getStartDate() != null && payoutEntity.get().getStartDate() != payoutDto.getStartDate()) {
-				System.out.println("StartDate validation "+payoutDto.getStartDate());
-				payoutEntity.get().setStartDate(payoutDto.getStartDate());
-			}
-			if(payoutDto.getEndDate() != null && payoutEntity.get().getEndDate() != payoutDto.getEndDate()) {
-				System.out.println("EndDate validation "+payoutDto.getEndDate());
-				payoutEntity.get().setEndDate(payoutDto.getEndDate());
-			}
-			if(payoutDto.getReturnEarnedDate() != null && payoutEntity.get().getReturnEarnedDate() != payoutDto.getReturnEarnedDate()) {
-				System.out.println("Earned Date validation "+payoutDto.getReturnEarnedDate());
-				payoutEntity.get().setReturnEarnedDate(payoutDto.getReturnEarnedDate());
-			}
-			if(payoutDto.getRedeem() != 0 && payoutEntity.get().getRedeem() != payoutDto.getRedeem()) {
-				System.out.println("reedem ::"+payoutDto.getRedeem());
-				payoutEntity.get().setRedeem(payoutDto.getRedeem());
-				
-			}
-			if(payoutDto.getBalanceFund() !=0 && payoutEntity.get().getBalanceFund() != payoutDto.getBalanceFund()) {
-				System.out.println("balanceFund ::"+(payoutDto.getInvestAmount()- payoutDto.getRedeem()));
-				payoutEntity.get().setBalanceFund(payoutDto.getInvestAmount()- payoutDto.getRedeem());
-			}
-			
-			if(payoutDto.getStatus() != null && payoutEntity.get().getStatus().equalsIgnoreCase(payoutDto.getStatus())) {
-				payoutEntity.get().setStatus(payoutDto.getStatus());
-			}
-		}
-		return payoutHistoyRepo.save(payoutEntity.get());
-	}
-	
-	@Override
-	public List<PayoutHistoryTest> getAllPayoutTest() {
-		List<PayoutHistoryTest> payoutEntity = payoutHistoyRepo.findAll();
-		
-		return payoutEntity;
-	}
-	
-	
 	
 	  @Override 
-	  public PayoutDto getPayoutByIdTest(Long payoutId) {
-	  Optional<PayoutHistoryTest> payoutEntity =payoutHistoyRepo.findById(payoutId); 
-	  return mapper.map(payoutEntity.get(),PayoutDto.class); }
-	 
-	  @Override 
-	  public List<TransactionHistoryTest> getTransactioHistoryByIdTest(Long payoutId) {
+	  public List<PayoutSchemeHistory> getPayoutSchemeHistoryById(Long payoutId) {
 		  
-		  return  trasanctionHistoryRepo.findTransactionHistoyById(payoutId); 
+		  return  payoutSchemeHistoryRepo.findPayoutSchemeHistoryById(payoutId); 
 	  }
-	 
 	 
 }

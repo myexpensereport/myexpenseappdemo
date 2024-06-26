@@ -6,7 +6,7 @@ package com.sp.myexpense.dao;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.sp.myexpense.entity.TransactionHistoryTest;
+import com.sp.myexpense.entity.PayoutSchemeHistory;
 
 /**
  * 
@@ -28,21 +28,10 @@ public class PayoutDto {
 	private int totalEarned;
 	private String status;
 	
-	private List<TransactionHistoryTest> historyTest;
+	private List<PayoutSchemeHistory> payoutSchemeHistories;
 	
 	
-	/**
-	 * @return the historyTest
-	 */
-	public List<TransactionHistoryTest> getHistoryTest() {
-		return historyTest;
-	}
-	/**
-	 * @param historyTest the historyTest to set
-	 */
-	public void setHistoryTest(List<TransactionHistoryTest> historyTest) {
-		this.historyTest = historyTest;
-	}
+	
 	/**
 	 * @return the id
 	 */
