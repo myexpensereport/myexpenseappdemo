@@ -1,18 +1,27 @@
-/**
- * 
- */
-package com.sp.myexpense.dao;
+package com.sp.myexpense.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
-import com.sp.myexpense.entity.TransactionHistoryTest;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.sp.myexpense.repository.TrasanctionHistoryRepo;
 
-/**
- * 
- */
-public class PayoutDto {
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 
+@Entity
+@Table(name = "PayoutHistoryTest")
+public class PayoutHistoryTest {
+	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private long id;
 	private String schemeName;
 	private int investAmount;
@@ -28,21 +37,25 @@ public class PayoutDto {
 	private int totalEarned;
 	private String status;
 	
-	private List<TransactionHistoryTest> historyTest;
+	@JsonManagedReference
+	@OneToMany(mappedBy = "payoutHistoryTest", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<TransactionHistoryTest> transactionHistoryTests = new ArrayList<>();
+
 	
-	
-	/**
-	 * @return the historyTest
+	 /**
+	 * @return the transactionHistoryTests
 	 */
-	public List<TransactionHistoryTest> getHistoryTest() {
-		return historyTest;
+	public List<TransactionHistoryTest> getTransactionHistoryTests() {
+		return transactionHistoryTests;
 	}
 	/**
-	 * @param historyTest the historyTest to set
+	 * @param transactionHistoryTests the transactionHistoryTests to set
 	 */
-	public void setHistoryTest(List<TransactionHistoryTest> historyTest) {
-		this.historyTest = historyTest;
+	public void setTransactionHistoryTests(List<TransactionHistoryTest> transactionHistoryTests) {
+		this.transactionHistoryTests = transactionHistoryTests;
 	}
+	
+	
 	/**
 	 * @return the id
 	 */
@@ -54,19 +67,6 @@ public class PayoutDto {
 	 */
 	public void setId(long id) {
 		this.id = id;
-	}
-	
-	/**
-	 * @return the status
-	 */
-	public String getStatus() {
-		return status;
-	}
-	/**
-	 * @param status the status to set
-	 */
-	public void setStatus(String status) {
-		this.status = status;
 	}
 	/**
 	 * @return the schemeName
@@ -212,8 +212,17 @@ public class PayoutDto {
 	public void setTotalEarned(int totalEarned) {
 		this.totalEarned = totalEarned;
 	}
-	
-	
-	
+	/**
+	 * @return the status
+	 */
+	public String getStatus() {
+		return status;
+	}
+	/**
+	 * @param status the status to set
+	 */
+	public void setStatus(String status) {
+		this.status = status;
+	}
 
 }

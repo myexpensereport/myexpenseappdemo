@@ -3,7 +3,9 @@
  */
 package com.sp.myexpense.controller;
 
+import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,9 +20,13 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateDeserializer;
 import com.sp.myexpense.dao.PayoutDto;
 import com.sp.myexpense.entity.Expense;
 import com.sp.myexpense.entity.PayoutEntity;
+import com.sp.myexpense.entity.PayoutHistoryTest;
+import com.sp.myexpense.entity.TransactionHistoryTest;
+import com.sp.myexpense.repository.TrasanctionHistoryRepo;
 import com.sp.myexpense.service.PayoutService;
 
 /**
@@ -33,6 +39,9 @@ public class PayoutController {
 	
 	@Autowired
 	PayoutService payoutService;
+	
+	@Autowired
+	TrasanctionHistoryRepo historyRepo;
 	
 	@PostMapping("/addPayout")
 	public ResponseEntity<?> addPayout(@RequestBody PayoutDto payoutDto) {
@@ -82,6 +91,62 @@ public class PayoutController {
 	 * schemeId) { System.out.println("Get SchemeDetails :::"); return
 	 * ResponseEntity.ok(payoutService.getSchemeDetails(schemeId)); }
 	 */
+	@PostMapping("/addPayoutTest")
+	public ResponseEntity<?> addPayoutTest(@RequestBody PayoutDto payoutDto) {
+		System.out.println("AddPayout::::::::::::"+payoutDto.getSchemeName());
+		PayoutHistoryTest payout = payoutService.addPayoutTest(payoutDto);
+		
+			TransactionHistoryTest historyTest = new TransactionHistoryTest();
+			historyTest.setSchemeName(payoutDto.getSchemeName());
+			historyTest.setExpectedAmount(payoutDto.getExpectedAmount());
+			historyTest.setUpdatedDate(LocalDate.now());
+			historyTest.setPayoutHistoryTest(payout);
+			historyRepo.save(historyTest);
+			System.out.println("historyRepo:::Success:::::::::");
+			
+		return new ResponseEntity<>(payout, HttpStatus.CREATED);
+		
+	}
 	
+	/*
+	 * @PostMapping("{id}") public ResponseEntity<?>
+	 * updatePayoutTest(@PathVariable("id") Long payoutId,@RequestBody PayoutDto
+	 * payoutDto) { System.out.println("Update Payout::::::::::::");
+	 * 
+	 * PayoutHistoryTest payoutDtoUpdate =
+	 * payoutService.updatePayoutTest(payoutId,payoutDto);
+	 * 
+	 * TransactionHistoryTest historyTest = new TransactionHistoryTest();
+	 * historyTest.setSchemeName(payoutDto.getSchemeName());
+	 * historyTest.setExpectedAmount(payoutDto.getExpectedAmount());
+	 * historyTest.setUpdatedDate(LocalDate.now());
+	 * historyTest.setPayoutHistoryTest(payoutDtoUpdate);
+	 * historyRepo.save(historyTest); return ResponseEntity.ok(payoutDtoUpdate); }
+	 */
+	
+	@GetMapping("/getAllPayoutTest")
+	public ResponseEntity<List<PayoutHistoryTest>> getAllPayoutTest() {
+		System.out.println("getAllPayoutTest::::::::::::");
+		List<PayoutHistoryTest> payoutDtos = payoutService.getAllPayoutTest();
+		System.out.println("::payoutDtos::"+payoutDtos);
+        return ResponseEntity.ok(payoutDtos);
+	}
+	
+	
+	  @PostMapping("{id}")
+	  public ResponseEntity<?>getPayoutByIdTest(@PathVariable("id") Long payoutId) {
+	  System.out.println("getPayoutById::Test::::::::::"); 
+	  PayoutDto payoutDto = payoutService.getPayoutByIdTest(payoutId); 
+	  return ResponseEntity.ok(payoutDto); 
+	  }
+	  
+	  @GetMapping("/history/{id}")
+	  public ResponseEntity<List<TransactionHistoryTest>> getTransactioHistoryByIdTest(@PathVariable("id") Long payoutId) {
+	  System.out.println("getPayoutById::Test::::::::::"); 
+	  List<TransactionHistoryTest> transactionHistoryTest = payoutService.getTransactioHistoryByIdTest(payoutId); 
+	  return ResponseEntity.ok(transactionHistoryTest);
+	  
+	  }
+	 
 
 }
