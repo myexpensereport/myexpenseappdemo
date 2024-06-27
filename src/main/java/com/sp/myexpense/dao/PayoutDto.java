@@ -33,6 +33,18 @@ public class PayoutDto {
 	
 	
 	/**
+	 * @return the payoutSchemeHistories
+	 */
+	public List<PayoutSchemeHistory> getPayoutSchemeHistories() {
+		return payoutSchemeHistories;
+	}
+	/**
+	 * @param payoutSchemeHistories the payoutSchemeHistories to set
+	 */
+	public void setPayoutSchemeHistories(List<PayoutSchemeHistory> payoutSchemeHistories) {
+		this.payoutSchemeHistories = payoutSchemeHistories;
+	}
+	/**
 	 * @return the id
 	 */
 	public long getId() {

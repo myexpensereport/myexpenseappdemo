@@ -49,16 +49,30 @@ public class PayoutServiceImpl implements PayoutService {
 	public List<PayoutEntity> getAllPayout() {
 		List<PayoutEntity> payoutEntity = payoutRepo.findAll();
 		for(PayoutEntity payout : payoutEntity){
+			
 			String noOfDays = getNumberOfDays(payout.getStartDate(),payout.getEndDate());
 			int balanceFund = getBalanceFund(payout.getInvestAmount(),payout.getRedeem());
 			int totalEarned = getTotalEarnedFromPayout(payout.getInterstAmount(),payout.getBonus());
 			payout.setTenure(noOfDays);
 			payout.setBalanceFund(balanceFund);
 			payout.setTotalEarned(totalEarned);
+			int totalinterestAmount =0 ;
+			int totalbouns =0;
+			if(payout.getPayoutSchemeHistories().size() >0) {
+				List<PayoutSchemeHistory> payoutSchemeHistoryList= payout.getPayoutSchemeHistories();
+				for(PayoutSchemeHistory history :payoutSchemeHistoryList) {
+					totalinterestAmount =history.getInterstAmount();
+					totalbouns = history.getBonus();
+					payout.setInterstAmount(totalinterestAmount+history.getInterstAmount());
+					payout.setBonus(totalbouns+history.getBonus());
+				}
+				System.out.println("totalinterestAmount"+payout.getInterstAmount());
+				System.out.println("Total Bonus"+payout.getBonus());
+			}
+			
 		}
 		
-		System.out.println(payoutEntity);
-		System.out.println(payoutEntity.stream().map(p->mapper.map(payoutEntity, PayoutDto.class)).collect(Collectors.toList()));
+		payoutEntity.stream().map(p->mapper.map(payoutEntity, PayoutDto.class)).collect(Collectors.toList());
 
 		return payoutEntity;
 	}
@@ -224,5 +238,5 @@ public class PayoutServiceImpl implements PayoutService {
 		  
 		  return  payoutSchemeHistoryRepo.findPayoutSchemeHistoryById(payoutId); 
 	  }
-	 
+	  
 }

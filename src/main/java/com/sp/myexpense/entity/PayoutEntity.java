@@ -4,11 +4,17 @@
 package com.sp.myexpense.entity;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 /**
@@ -35,6 +41,23 @@ public class PayoutEntity {
 	private int totalEarned;
 	private String status;
 	
+	@JsonManagedReference
+	@OneToMany(mappedBy = "payoutEntity", cascade = CascadeType.ALL, orphanRemoval = true)
+   private List<PayoutSchemeHistory> payoutSchemeHistories ;
+	
+	
+	/**
+	 * @return the payoutSchemeHistories
+	 */
+	public List<PayoutSchemeHistory> getPayoutSchemeHistories() {
+		return payoutSchemeHistories;
+	}
+	/**
+	 * @param payoutSchemeHistories the payoutSchemeHistories to set
+	 */
+	public void setPayoutSchemeHistories(List<PayoutSchemeHistory> payoutSchemeHistories) {
+		this.payoutSchemeHistories = payoutSchemeHistories;
+	}
 	/**
 	 * @return the tenure
 	 */
