@@ -61,9 +61,9 @@ public class PayoutServiceImpl implements PayoutService {
 			if(payout.getPayoutSchemeHistories().size() >0) {
 				List<PayoutSchemeHistory> payoutSchemeHistoryList= payout.getPayoutSchemeHistories();
 				for(PayoutSchemeHistory history :payoutSchemeHistoryList) {
-					totalinterestAmount =history.getInterstAmount();
-					totalbouns = history.getBonus();
-					payout.setInterstAmount(totalinterestAmount+history.getInterstAmount());
+					totalinterestAmount = totalinterestAmount+history.getInterstAmount();
+					totalbouns = totalbouns+history.getBonus();
+					payout.setInterstAmount(totalinterestAmount);
 					payout.setBonus(totalbouns+history.getBonus());
 				}
 				System.out.println("totalinterestAmount"+payout.getInterstAmount());
@@ -123,10 +123,13 @@ public class PayoutServiceImpl implements PayoutService {
 				System.out.println("balanceFund ::"+(payoutDto.getInvestAmount()- payoutDto.getRedeem()));
 				payoutEntity.get().setBalanceFund(payoutDto.getInvestAmount()- payoutDto.getRedeem());
 			}
-			
+			if(payoutDto.getBonus() != 0 && payoutEntity.get().getBonus() != (payoutDto.getBonus())) {
+				payoutEntity.get().setBonus(payoutDto.getBonus());
+			}
 			if(payoutDto.getStatus() != null && payoutEntity.get().getStatus().equalsIgnoreCase(payoutDto.getStatus())) {
 				payoutEntity.get().setStatus(payoutDto.getStatus());
 			}
+			
 		}
 		return payoutRepo.save(payoutEntity.get());
 	}
@@ -159,72 +162,72 @@ public class PayoutServiceImpl implements PayoutService {
 	@Override
 	public int getPayoutByMonth(String month) {
 		
-		List<PayoutEntity> list ;
+		List<PayoutSchemeHistory> list ;
 		if(month.equals("Jan")) {
 			System.out.println("jan");
-			list = payoutRepo.findPayoutByMonth(LocalDate.of(2024, 01, 01), LocalDate.of(2024, 01, 31));
+			list = payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 01, 01), LocalDate.of(2024, 01, 31));
 			return getPayoutRes(list);
 		}
 		if(month.equals("Feb")) {
 			System.out.println("Feb");
-			list=payoutRepo.findPayoutByMonth(LocalDate.of(2024, 02, 01), LocalDate.of(2024, 02, 28));
+			list=payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 02, 01), LocalDate.of(2024, 02, 28));
 		    return getPayoutRes(list);
 		}
 		if(month.equals("Mar")) {
 			System.out.println("Mar");
-			list = payoutRepo.findPayoutByMonth(LocalDate.of(2024, 03, 01), LocalDate.of(2024, 03, 31));
+			list = payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 03, 01), LocalDate.of(2024, 03, 31));
 			 return getPayoutRes(list);
 		}
 		if(month.equals("Apr")) {
 			System.out.println("Apr");
-			list= payoutRepo.findPayoutByMonth(LocalDate.of(2024, 04, 01), LocalDate.of(2024, 04, 30));
+			list= payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 04, 01), LocalDate.of(2024, 04, 30));
 			return getPayoutRes(list);
 		}
 		if(month.equals("May")) {
 			System.out.println("May");
-			list= payoutRepo.findPayoutByMonth(LocalDate.of(2024, 05, 01), LocalDate.of(2024, 05, 31));
+			list= payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 05, 01), LocalDate.of(2024, 05, 31));
 			return getPayoutRes(list);
 		}
 		if(month.equals("June")) {
 			System.out.println("June");
-			list=payoutRepo.findPayoutByMonth(LocalDate.of(2024, 06, 01), LocalDate.of(2024, 06, 30));
+			list=payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 06, 01), LocalDate.of(2024, 06, 30));
 			return getPayoutRes(list);
 		}
 		if(month.equals("July")) {
 			System.out.println("July");
-			list= payoutRepo.findPayoutByMonth(LocalDate.of(2024, 07, 01), LocalDate.of(2024, 07, 31));
+			list= payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 07, 01), LocalDate.of(2024, 07, 31));
 			return getPayoutRes(list);
 		}
 		if(month.equals("Aug")) {
 			System.out.println("Aug");
-			list=payoutRepo.findPayoutByMonth(LocalDate.of(2024, 8, 01), LocalDate.of(2024, 8, 31));
+			list=payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 8, 01), LocalDate.of(2024, 8, 31));
 			return getPayoutRes(list);
 		}
 		if(month.equals("Sept")) {
 			System.out.println("Sept");
-			list=payoutRepo.findPayoutByMonth(LocalDate.of(2024, 9, 01), LocalDate.of(2024, 9, 30));
+			list=payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 9, 01), LocalDate.of(2024, 9, 30));
 			return getPayoutRes(list);
 		}if(month.equals("Oct")) {
 			System.out.println("Oct");
-			list= payoutRepo.findPayoutByMonth(LocalDate.of(2024, 10, 01), LocalDate.of(2024, 10, 30));
+			list= payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 10, 01), LocalDate.of(2024, 10, 30));
 			return getPayoutRes(list);
 		}
 		if(month.equals("Nov")) {
 			System.out.println("Nov");
-			list= payoutRepo.findPayoutByMonth(LocalDate.of(2024, 11, 01), LocalDate.of(2024, 11, 30));
+			list= payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 11, 01), LocalDate.of(2024, 11, 30));
 			return getPayoutRes(list);
 		}
 		if(month.equals("Dec")) {
 			System.out.println("Dec");
-			list= payoutRepo.findPayoutByMonth(LocalDate.of(2024, 12, 01), LocalDate.of(2024, 12, 31));
+			list= payoutSchemeHistoryRepo.findPayoutByMonth(LocalDate.of(2024, 12, 01), LocalDate.of(2024, 12, 31));
 			return getPayoutRes(list);
 		}
 		return 0;
 	}
 
-	private int getPayoutRes(List<PayoutEntity> list) {
+	private int getPayoutRes(List<PayoutSchemeHistory> list) {
 		int payoutRes =0;
-		for(PayoutEntity entity :list) {
+		for(PayoutSchemeHistory entity :list) {
 			int res =entity.getInterstAmount()+entity.getBonus();
 			payoutRes = payoutRes+ res;
 		}
