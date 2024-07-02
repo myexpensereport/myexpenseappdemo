@@ -25,6 +25,8 @@ public PayoutEntity addPayout(PayoutDto payoutDto );
     
     public int  getPayoutByMonth(String month);
     
+   // public int getSchemeHistoryByMonth(String month);
+    
     
     List<PayoutSchemeHistory> getPayoutSchemeHistoryById(Long payoutId);
 

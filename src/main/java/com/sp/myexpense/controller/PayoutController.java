@@ -158,6 +158,11 @@ public class PayoutController {
 		return ResponseEntity.ok(payoutSchemeHistories);
 
 	}
+	@GetMapping("/getAllSchemeHistory/{month}")
+	public int getPayoutBySchemeHistoryMonth(@PathVariable("month") String month) {
+		System.out.println("Get getPayoutBySchemeHistoryMonth :::");
+		return payoutService.getPayoutByMonth(month);
+	}
 	
 	
 }
