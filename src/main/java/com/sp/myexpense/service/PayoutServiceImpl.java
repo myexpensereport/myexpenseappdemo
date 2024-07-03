@@ -47,7 +47,7 @@ public class PayoutServiceImpl implements PayoutService {
 
 	@Override
 	public List<PayoutEntity> getAllPayout() {
-		List<PayoutEntity> payoutEntity = payoutRepo.findAll();
+		List<PayoutEntity> payoutEntity = payoutRepo.findAllPayout(); 
 		for(PayoutEntity payout : payoutEntity){
 			
 			String noOfDays = getNumberOfDays(payout.getStartDate(),payout.getEndDate());

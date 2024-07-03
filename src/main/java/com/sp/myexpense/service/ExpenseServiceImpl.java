@@ -35,7 +35,7 @@ public class ExpenseServiceImpl implements ExpenseService {
 
 	@Override
 	public List<Expense> getAllExpense() {
-		return expenseRepository.findAll();
+		return expenseRepository.findAllExpense();
 		
 	}
 

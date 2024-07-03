@@ -19,9 +19,12 @@ import com.sp.myexpense.entity.Expense;
 @Repository
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 	
+	@Query(nativeQuery = true, value = "select * from myapp.expenses order by created desc")
+	List<Expense> findAllExpense();
+	
 	@Query(nativeQuery = true, 
 	        value 
-	        = "select * from myapp.expenses e where e.created between ?1 and ?2 ")
+	        = "select * from myapp.expenses e where e.created between ?1 and ?2 order by created desc ")
 	List<Expense> findExpenseByLimit(LocalDate startDate, LocalDate endDate);
 
 	

@@ -21,7 +21,11 @@ import com.sp.myexpense.entity.PayoutEntity;
 @Repository
 public interface PayoutRepo extends JpaRepository<PayoutEntity, Long> {
 	
-	@Query(nativeQuery = true, value = "select * from myapp.payout e where  return_earned_date between ?1 and ?2 ")
+	@Query(nativeQuery = true, value = "select * from myapp.payout order by return_earned_date desc")
+	List<PayoutEntity> findAllPayout();
+	
+	
+	@Query(nativeQuery = true, value = "select * from myapp.payout e where  return_earned_date between ?1 and ?2 order by return_earned_date desc")
 	List<PayoutEntity> findPayoutByMonth(LocalDate startDate, LocalDate endDate);
 	
 	/*
