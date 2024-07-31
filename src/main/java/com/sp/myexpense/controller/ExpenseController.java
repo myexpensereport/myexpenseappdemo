@@ -1,13 +1,16 @@
 package com.sp.myexpense.controller;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,9 +22,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.sp.myexpense.dao.PayoutDto;
 import com.sp.myexpense.dao.RegisterDto;
 import com.sp.myexpense.dao.ValidateOtpDto;
 import com.sp.myexpense.entity.Expense;
+import com.sp.myexpense.entity.PayoutEntity;
+import com.sp.myexpense.entity.PayoutSchemeHistory;
 import com.sp.myexpense.entity.SavingPlan;
 import com.sp.myexpense.entity.User;
 import com.sp.myexpense.service.ExpenseService;
@@ -174,6 +180,32 @@ public class ExpenseController {
 		System.out.println("Get AllExpensesReport :::");
 		return expenseService.getExpenseByLimit(limit);
 	}
+	
+	@GetMapping("/getAllExpensesByCategory/{categoryType}")
+	public List<Expense> getAllExpenseByCategory(@PathVariable("categoryType") String categoryType) {
+		System.out.println("Get getAllExpenseByCategory :::");
+		return expenseService.getAllExpenseByCategory(categoryType);
+	}
 
+	@GetMapping("{id}")
+	public ResponseEntity<?> getSavingplanById(@PathVariable("id") Long savingPlanId) {
+		System.out.println("getSavingplanById::::::::::::");
+		Optional<SavingPlan> savingPlan = expenseService.getSavingPlanById(savingPlanId);
+		return ResponseEntity.ok(savingPlan);
+	}
+	
+	@PutMapping("{id}")
+	public ResponseEntity<?> updateSavingPlan(@PathVariable("id") Long savingplanID, @RequestBody SavingPlan savingPlan) {
+		System.out.println("updateSavingPlan::::::::::::");
+		SavingPlan savingPlanUpdate = expenseService.updateSavingPlan(savingplanID, savingPlan);
 
+		return ResponseEntity.ok(savingPlanUpdate);
+	}
+	
+	@DeleteMapping("{id}")
+	public ResponseEntity<?> deleteSavingPlan(@PathVariable("id") Long savingplanID) {
+		System.out.println("deleteSavingPlan::::::::::::");
+		expenseService.deleteSavingPlan(savingplanID);
+		return new ResponseEntity<>("SavingPlan Delete Successfully", HttpStatus.OK);
+	}
 }

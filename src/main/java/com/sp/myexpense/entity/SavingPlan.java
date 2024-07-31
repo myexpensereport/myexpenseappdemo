@@ -24,11 +24,24 @@ public class SavingPlan {
 	private String schemeName;
     private int investAmount;
     private int interestAmount;
+    private String category;
     private LocalDate startDate;
     private LocalDate endDate;
     private String status;
     
-    
+    /**
+	 * @return the category
+	 */
+	public String getCategory() {
+		return category;
+	}
+	/**
+	 * @param category the category to set
+	 */
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
 	public int getInterestAmount() {
 		return interestAmount;
 	}

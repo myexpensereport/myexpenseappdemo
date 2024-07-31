@@ -26,6 +26,10 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 	        value 
 	        = "select * from myapp.expenses e where e.created between ?1 and ?2 order by created desc ")
 	List<Expense> findExpenseByLimit(LocalDate startDate, LocalDate endDate);
+	@Query(nativeQuery = true, 
+	        value 
+	        = "select * from myapp.expenses e where e.category = ?1 ")
+	List<Expense> findExpenseByCategory(String categoryType);
 
 	
 
